@@ -34,36 +34,15 @@ class Tape {
     return os;
   }
 
+  friend std::istream& operator>>(std::istream& is,
+                                  Tape::MoveDirection& movement);
+
  private:
   const Symbol blank_symbol_;
   std::map<std::int64_t, Symbol> tape_;
   std::int64_t head_;
 };
 
-std::istream& operator>>(std::istream& is, Tape::MoveDirection& movement) {
-  char movement_char;
-
-  is >> movement_char;
-  switch (movement_char) {
-    case 'L':
-      movement = Tape::MoveDirection::kLeft;
-      break;
-
-    case 'R':
-      movement = Tape::MoveDirection::kRight;
-      break;
-
-    case 'S':
-      movement = Tape::MoveDirection::kNoMove;
-      break;
-
-    default:
-      throw InvalidMovement{movement_char};
-  }
-
-  return is;
-}
-
 }  // namespace cc
 
-#endif  // P2TURINGMACHINE_TURING_MACHINE_TAPE _H_
+#endif  // P2TURINGMACHINE_TURING_MACHINE_TAPE_H_
