@@ -55,6 +55,18 @@ class Configuration {
     accept_states_ = accept_states;
   }
 
+  inline const std::map<std::tuple<State, Symbol>,
+                        std::tuple<State, Symbol, Tape::MoveDirection>>&
+  GetTransitionFunctions() const {
+    return transition_functions_;
+  }
+  inline void SetTransitionFunctions(
+      const std::map<std::tuple<State, Symbol>,
+                     std::tuple<State, Symbol, Tape::MoveDirection>>&
+          transition_functions) {
+    transition_functions_ = transition_functions;
+  }
+
  private:
   static std::stringstream ParseFile(std::ifstream& input_file);
 
