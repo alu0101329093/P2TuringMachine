@@ -34,4 +34,5 @@ const Symbol& Tape::Read() const {
 
 void Tape::Write(const Symbol& symbol) { tape_[head_] = symbol; }
 
+
 }  // namespace cc
