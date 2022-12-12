@@ -11,13 +11,15 @@ int ProtectedMain(int argc, char* argv[]) {
   std::cout << "Ingresa la cadena de entrada: ";
   std::cin >> input_string;
 
-  if (turing_machine.Run(input_string)) {
+  auto [accepted, tape] = turing_machine.Run(input_string);
+  if (accepted) {
     std::cout << "Cadena aceptada" << std::endl;
   } else {
     std::cout << "Cadena rechazada" << std::endl;
   }
+  std::cout << "Tape: " << tape << std::endl;
 
-  return 0;
+  
 
   return EXIT_SUCCESS;
 }

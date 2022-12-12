@@ -38,6 +38,11 @@ class Symbol {
     return is;
   }
 
+  friend std::ostream& operator<<(std::ostream& os, const Symbol& symbol) {
+    os << symbol.symbol_;
+    return os;
+  }
+
  private:
   char symbol_;
 };

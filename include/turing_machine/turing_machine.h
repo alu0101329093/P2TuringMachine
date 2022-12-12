@@ -2,6 +2,7 @@
 #define P2TURINGMACHINE_TURING_MACHINE_TURING_MACHINE_H_
 
 #include <string>
+#include <tuple>
 #include <unordered_set>
 
 #include "turing_machine/configuration.h"
@@ -15,7 +16,7 @@ class TuringMachine {
  public:
   explicit TuringMachine(const Configuration& configuration);
 
-  bool Run(const std::string& input_tape);
+  std::tuple<bool, Tape> Run(const std::string& input_tape);
 
  private:
   State initial_state_;
