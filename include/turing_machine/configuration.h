@@ -9,9 +9,11 @@
 #include <tuple>
 #include <unordered_set>
 
+#include "turing_machine/input_exception.h"
 #include "turing_machine/state.h"
 #include "turing_machine/symbol.h"
 #include "turing_machine/tape.h"
+#include "utils/string.h"
 
 namespace cc {
 
@@ -69,6 +71,12 @@ class Configuration {
 
  private:
   static std::stringstream ParseFile(std::ifstream& input_file);
+
+  void CheckState(const State& state) const;
+  void CheckSymbol(const Symbol& symbol) const;
+  void CheckTransition(const State& current_state, const Symbol& current_symbol,
+                       const State& next_state,
+                       const Symbol& next_symbol) const;
 
   std::unordered_set<State> states_;
   std::unordered_set<Symbol> alphabet_;

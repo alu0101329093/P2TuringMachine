@@ -1,7 +1,5 @@
 #include "turing_machine/invalid_movement.h"
 
-#include "invalid_movement.h"
-
 namespace cc {
 
 InvalidMovement::InvalidMovement(char movement)

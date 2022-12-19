@@ -1,7 +1,5 @@
 #include "turing_machine/configuration.h"
 
-#include "configuration.h"
-
 namespace cc {
 
 Configuration::Configuration(const std::string& filepath)
@@ -39,14 +37,17 @@ Configuration::Configuration(const std::string& filepath)
   std::getline(parsed_file, line);
   iss = std::istringstream(line);
   iss >> initial_state_;
+  CheckState(initial_state_);
 
   std::getline(parsed_file, line);
   iss = std::istringstream(line);
   iss >> blank_symbol_;
+  CheckSymbol(blank_symbol_);
 
   std::getline(parsed_file, line);
   iss = std::istringstream(line);
   while (iss >> state) {
+    CheckState(state);
     accept_states_.insert(state);
   }
 
@@ -55,16 +56,11 @@ Configuration::Configuration(const std::string& filepath)
   Tape::MoveDirection movement;
   while (std::getline(parsed_file, line)) {
     iss = std::istringstream(line);
-    iss >> current_state >> current_symbol;
-    iss >> next_state >> next_symbol >> movement;
-    transition_functions_[{current_state, current_symbol}] = {
-        next_state, next_symbol, movement};
-
-    // Transition transition;
-    // iss >> transition.current_state >> transition.current_symbol;
-    // iss >> transition.next_state >> transition.next_symbol >>
-    //     transition.movement;
-    // transitions_.push_back(transition);
+    iss >> current_state >> current_symbol >> next_state >> next_symbol >>
+        movement;
+    CheckTransition(current_state, current_symbol, next_state, next_symbol);
+    transition_functions_[std::tuple{current_state, current_symbol}] =
+        std::tuple{next_state, next_symbol, movement};
   }
 }
 
@@ -73,11 +69,33 @@ std::stringstream Configuration::ParseFile(std::ifstream& input_file) {
 
   std::string line;
   while (std::getline(input_file, line)) {
-    if (line[0] == '#') continue;
+    std::string trimmed_line{Trim(line)};
+    std::size_t position = trimmed_line.find_first_of('#');
+    if (position == 0) continue;
 
-    output << line << "\n";
+    output << trimmed_line.substr(0, position) << "\n";
   }
 
   return output;
 }
+
+void Configuration::CheckState(const State& state) const {
+  if (!states_.count(state)) throw InputException("State", state.GetName());
+}
+
+void Configuration::CheckSymbol(const Symbol& symbol) const {
+  if (!tape_alphabet_.count(symbol))
+    throw InputException("Symbol", std::string{symbol.Get()});
+}
+
+void Configuration::CheckTransition(const State& current_state,
+                                    const Symbol& current_symbol,
+                                    const State& next_state,
+                                    const Symbol& next_symbol) const {
+  CheckState(current_state);
+  CheckSymbol(current_symbol);
+  CheckState(next_state);
+  CheckSymbol(next_symbol);
+}
+
 }  // namespace cc

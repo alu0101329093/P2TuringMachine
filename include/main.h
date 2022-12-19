@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "turing_machine/configuration.h"
+#include "turing_machine/input_exception.h"
+#include "turing_machine/invalid_input_tape.h"
 #include "turing_machine/invalid_movement.h"
 #include "turing_machine/turing_machine.h"
 

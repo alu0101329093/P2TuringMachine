@@ -2,7 +2,7 @@
 # Reconoce cadenas en el lenguaje L = { a^nb^m | m < n, n > 0 }
 q0 q1 q2 q3  # conjunto Q
 a b          # conjunto Σ
-a b c .        # conjunto Γ
+a b c .      # conjunto Γ
 q0           # estado inicial
 .            # símbolo blanco
 q3           # conjunto F

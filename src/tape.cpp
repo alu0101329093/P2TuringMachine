@@ -1,7 +1,5 @@
 #include "turing_machine/tape.h"
 
-#include "tape.h"
-
 namespace cc {
 
 Tape::Tape(Symbol blank_symbol, const std::string& initial_tape)

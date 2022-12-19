@@ -2,7 +2,7 @@
 
 int ProtectedMain(int argc, char* argv[]) {
   if (argc != 2) {
-    std::cerr << "Uso: " << argv[0] << " <configuration_file>" << std::endl;
+    std::cerr << "Use: " << argv[0] << " <configuration_file>" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -19,8 +19,6 @@ int ProtectedMain(int argc, char* argv[]) {
   }
   std::cout << "Tape: " << tape << std::endl;
 
-  
-
   return EXIT_SUCCESS;
 }
 
@@ -30,6 +28,12 @@ int main(int argc, char* argv[]) {
   } catch (const cc::InvalidMovement& error) {
     std::cerr << argv[0] << ": " << error.what() << "\n";
     return 2;
+  } catch (const cc::InputException& error) {
+    std::cerr << argv[0] << ": " << error.what() << "\n";
+    return 3;
+  } catch (const cc::InvalidInputTape& error) {
+    std::cerr << argv[0] << ": " << error.what() << "\n";
+    return 4;
   } catch (...) {
     std::cerr << argv[0] << ": Unknown error\n";
     return 99;

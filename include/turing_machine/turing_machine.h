@@ -6,6 +6,7 @@
 #include <unordered_set>
 
 #include "turing_machine/configuration.h"
+#include "turing_machine/invalid_input_tape.h"
 #include "turing_machine/state.h"
 #include "turing_machine/symbol.h"
 #include "turing_machine/tape.h"
@@ -19,6 +20,9 @@ class TuringMachine {
   std::tuple<bool, Tape> Run(const std::string& input_tape);
 
  private:
+  void CheckInputTape(const std::string& input_tape) const;
+
+  std::unordered_set<Symbol> tape_alphabet_;
   State initial_state_;
   Symbol blank_symbol_;
   std::unordered_set<State> accept_states_;

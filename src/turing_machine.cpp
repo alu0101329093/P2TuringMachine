@@ -3,12 +3,14 @@
 namespace cc {
 
 TuringMachine::TuringMachine(const Configuration& configuration)
-    : initial_state_{configuration.GetInitialState()},
+    : tape_alphabet_{configuration.GetTapeAlphabet()},
+      initial_state_{configuration.GetInitialState()},
       blank_symbol_{configuration.GetBlankSymbol()},
       accept_states_{configuration.GetAcceptStates()},
       transition_functions_{configuration.GetTransitionFunctions()} {}
 
 std::tuple<bool, Tape> TuringMachine::Run(const std::string& input_tape) {
+  CheckInputTape(input_tape);
   State current_state{initial_state_};
   Tape tape{blank_symbol_, input_tape};
 
@@ -23,6 +25,15 @@ std::tuple<bool, Tape> TuringMachine::Run(const std::string& input_tape) {
   }
 
   return {true, tape};
+}
+
+void TuringMachine::CheckInputTape(const std::string& input_tape) const {
+  Symbol symbol;
+  for (auto character : input_tape) {
+    symbol.Set(character);
+    if (!tape_alphabet_.count(symbol))
+      throw InvalidInputTape(std::string{character});
+  }
 }
 
 }  // namespace cc
