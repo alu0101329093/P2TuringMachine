@@ -23,7 +23,7 @@ class Configuration {
  public:
   using TransitionKey = std::tuple<State, std::vector<Symbol>>;
   using TransitionValue =
-      std::tuple<State, std::vector<Symbol>, Tape::MoveDirection>;
+      std::tuple<State, std::vector<Symbol>, std::vector<Tape::MoveDirection>>;
 
   explicit Configuration(const std::string& filepath);
 

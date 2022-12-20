@@ -25,7 +25,7 @@ std::tuple<bool, Tape> TuringMachine::Run(const std::string& input_tape) {
     current_state = next_state;
     for (std::size_t i = 0; i < tapes.size(); ++i) {
       tapes[i].Write(next_symbols[i]);
-      tapes[i].Move(movement);
+      tapes[i].Move(movement[i]);
     }
   }
 

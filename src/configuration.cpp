@@ -58,22 +58,20 @@ Configuration::Configuration(const std::string& filepath)
   State current_state, next_state;
   std::vector<Symbol> current_symbols{tapes_amount_, Symbol{}};
   std::vector<Symbol> next_symbols{tapes_amount_, Symbol{}};
-  Tape::MoveDirection movement;
+  std::vector<Tape::MoveDirection> movements{tapes_amount_};
   while (std::getline(parsed_file, line)) {
     iss = std::istringstream(line);
     iss >> current_state;
-    // current_symbols.clear();
     for (std::size_t i = 0; i < tapes_amount_; ++i) {
       iss >> current_symbols[i];
     }
     iss >> next_state;
     for (std::size_t i = 0; i < tapes_amount_; ++i) {
-      iss >> next_symbols[i];
+      iss >> next_symbols[i] >> movements[i];
     }
-    iss >> movement;
     CheckTransition(current_state, current_symbols, next_state, next_symbols);
     transition_functions_[std::tuple{current_state, current_symbols}] =
-        std::tuple{next_state, next_symbols, movement};
+        std::tuple{next_state, next_symbols, movements};
   }
 }
 

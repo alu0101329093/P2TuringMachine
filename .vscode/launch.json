@@ -5,7 +5,7 @@
       "name": "Debug",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["examples/MT2.txt"],
+      "args": ["examples/MT2-multi.txt"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
