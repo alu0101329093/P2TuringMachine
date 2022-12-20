@@ -1,5 +1,5 @@
-# Ejemplo de una MT
-# Reconoce cadenas en el lenguaje L = { a^nb^m | m < n, n > 0 }
+# MT que reciba como parámetro una cadena binaria y separe los ceros y los unos
+# Colocando en la cinta primero los unos y después los ceros dejando un espacio en blanco entre ellos
 q0 q1 q2 q3 q4 q5 q6 q7 q8 q9 # conjunto Q
 0 1                           # conjunto Σ
 0 1 p | .                     # conjunto Γ
