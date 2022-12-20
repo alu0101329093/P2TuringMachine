@@ -6,6 +6,7 @@ q0 q1 q2 q3 q4 q5 q6 q7 q8 q9 # conjunto Q
 q0                            # estado inicial
 .                             # símbolo blanco
 q9                            # conjunto F
+1                             # número de cintas
 q0 0 q0 0 L                   # función de transición: δ (q0, a) = (q0, a, R)
 q0 1 q0 1 L                   # cada una de las transiciones en una línea distinta
 q0 . q1 p L

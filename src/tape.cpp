@@ -5,7 +5,16 @@ namespace cc {
 Tape::Tape(Symbol blank_symbol, const std::string& initial_tape)
     : blank_symbol_{blank_symbol}, tape_{}, head_{} {
   for (std::size_t i = 0; i < initial_tape.size(); ++i) {
-    tape_[i] = initial_tape[i];
+    tape_[i] = Symbol{initial_tape[i]};
+  }
+}
+
+void Tape::SetInitialTape(const std::string& initial_tape) {
+  head_ = 0;
+  tape_.clear();
+
+  for (std::size_t i = 0; i < initial_tape.size(); ++i) {
+    tape_[i] = Symbol{initial_tape[i]};
   }
 }
 

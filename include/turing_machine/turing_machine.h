@@ -1,9 +1,11 @@
 #ifndef P2TURINGMACHINE_TURING_MACHINE_TURING_MACHINE_H_
 #define P2TURINGMACHINE_TURING_MACHINE_TURING_MACHINE_H_
 
+#include <cstddef>
 #include <string>
 #include <tuple>
 #include <unordered_set>
+#include <vector>
 
 #include "turing_machine/configuration.h"
 #include "turing_machine/invalid_input_tape.h"
@@ -21,13 +23,14 @@ class TuringMachine {
 
  private:
   void CheckInputTape(const std::string& input_tape) const;
+  static std::vector<Symbol> GetTapesSymbols(std::vector<Tape>& tapes);
 
   std::unordered_set<Symbol> tape_alphabet_;
   State initial_state_;
   Symbol blank_symbol_;
   std::unordered_set<State> accept_states_;
-  std::map<std::tuple<State, Symbol>,
-           std::tuple<State, Symbol, Tape::MoveDirection>>
+  std::size_t tapes_amount_;
+  std::map<Configuration::TransitionKey, Configuration::TransitionValue>
       transition_functions_;
 };
 

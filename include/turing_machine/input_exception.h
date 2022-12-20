@@ -8,7 +8,7 @@ namespace cc {
 
 class InputException : public std::exception {
  public:
-  InputException(const std::string& type, const std::string& name);
+  explicit InputException(const std::string& type, const std::string& name);
   const char* what() const noexcept override;
 
  private:

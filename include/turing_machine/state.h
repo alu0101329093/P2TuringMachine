@@ -9,7 +9,7 @@
 namespace cc {
 class State {
  public:
-  State(const std::string& name = "");
+  explicit State(const std::string& name = "");
 
   inline const std::string& GetName() const { return name_; }
   inline void SetName(const std::string& name) { name_ = name; }

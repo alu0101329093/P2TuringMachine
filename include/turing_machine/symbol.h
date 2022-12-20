@@ -9,7 +9,7 @@ namespace cc {
 
 class Symbol {
  public:
-  Symbol(char symbol = ' ');
+  explicit Symbol(char symbol = ' ');
 
   inline char Get() const { return symbol_; }
   inline void Set(char new_symbol) { symbol_ = new_symbol; }

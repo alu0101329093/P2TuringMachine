@@ -19,6 +19,8 @@ class Tape {
   explicit Tape(Symbol blank_symbol = Symbol{'B'},
                 const std::string& initial_tape = "");
 
+  void SetInitialTape(const std::string& initial_tape);
+
   void Move(MoveDirection direction);
 
   const Symbol& Read() const;

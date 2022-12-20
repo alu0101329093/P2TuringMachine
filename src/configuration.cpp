@@ -51,16 +51,29 @@ Configuration::Configuration(const std::string& filepath)
     accept_states_.insert(state);
   }
 
+  std::getline(parsed_file, line);
+  iss = std::istringstream(line);
+  iss >> tapes_amount_;
+
   State current_state, next_state;
-  Symbol current_symbol, next_symbol;
+  std::vector<Symbol> current_symbols{tapes_amount_, Symbol{}};
+  std::vector<Symbol> next_symbols{tapes_amount_, Symbol{}};
   Tape::MoveDirection movement;
   while (std::getline(parsed_file, line)) {
     iss = std::istringstream(line);
-    iss >> current_state >> current_symbol >> next_state >> next_symbol >>
-        movement;
-    CheckTransition(current_state, current_symbol, next_state, next_symbol);
-    transition_functions_[std::tuple{current_state, current_symbol}] =
-        std::tuple{next_state, next_symbol, movement};
+    iss >> current_state;
+    // current_symbols.clear();
+    for (std::size_t i = 0; i < tapes_amount_; ++i) {
+      iss >> current_symbols[i];
+    }
+    iss >> next_state;
+    for (std::size_t i = 0; i < tapes_amount_; ++i) {
+      iss >> next_symbols[i];
+    }
+    iss >> movement;
+    CheckTransition(current_state, current_symbols, next_state, next_symbols);
+    transition_functions_[std::tuple{current_state, current_symbols}] =
+        std::tuple{next_state, next_symbols, movement};
   }
 }
 
@@ -88,14 +101,17 @@ void Configuration::CheckSymbol(const Symbol& symbol) const {
     throw InputException("Symbol", std::string{symbol.Get()});
 }
 
-void Configuration::CheckTransition(const State& current_state,
-                                    const Symbol& current_symbol,
-                                    const State& next_state,
-                                    const Symbol& next_symbol) const {
+void Configuration::CheckTransition(
+    const State& current_state, const std::vector<Symbol>& current_symbols,
+    const State& next_state, const std::vector<Symbol>& next_symbols) const {
   CheckState(current_state);
-  CheckSymbol(current_symbol);
+  for (const auto& current_symbol : current_symbols) {
+    CheckSymbol(current_symbol);
+  }
   CheckState(next_state);
-  CheckSymbol(next_symbol);
+  for (const auto& next_symbol : next_symbols) {
+    CheckSymbol(next_symbol);
+  }
 }
 
 }  // namespace cc

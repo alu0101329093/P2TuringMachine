@@ -1,6 +1,7 @@
 #ifndef P2TURINGMACHINE_TURING_MACHINE_CONFIGURATION_H_
 #define P2TURINGMACHINE_TURING_MACHINE_CONFIGURATION_H_
 
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -8,6 +9,7 @@
 #include <string>
 #include <tuple>
 #include <unordered_set>
+#include <vector>
 
 #include "turing_machine/input_exception.h"
 #include "turing_machine/state.h"
@@ -19,6 +21,10 @@ namespace cc {
 
 class Configuration {
  public:
+  using TransitionKey = std::tuple<State, std::vector<Symbol>>;
+  using TransitionValue =
+      std::tuple<State, std::vector<Symbol>, Tape::MoveDirection>;
+
   explicit Configuration(const std::string& filepath);
 
   inline const std::unordered_set<State>& GetStates() const { return states_; }
@@ -57,15 +63,19 @@ class Configuration {
     accept_states_ = accept_states;
   }
 
-  inline const std::map<std::tuple<State, Symbol>,
-                        std::tuple<State, Symbol, Tape::MoveDirection>>&
+  inline std::size_t GetTapesAmount() const { return tapes_amount_; }
+  inline void SetTapesAmount(std::size_t tapes_amount) {
+    tapes_amount_ = tapes_amount;
+  }
+
+  inline const std::map<Configuration::TransitionKey,
+                        Configuration::TransitionValue>&
   GetTransitionFunctions() const {
     return transition_functions_;
   }
   inline void SetTransitionFunctions(
-      const std::map<std::tuple<State, Symbol>,
-                     std::tuple<State, Symbol, Tape::MoveDirection>>&
-          transition_functions) {
+      const std::map<Configuration::TransitionKey,
+                     Configuration::TransitionValue>& transition_functions) {
     transition_functions_ = transition_functions;
   }
 
@@ -74,9 +84,10 @@ class Configuration {
 
   void CheckState(const State& state) const;
   void CheckSymbol(const Symbol& symbol) const;
-  void CheckTransition(const State& current_state, const Symbol& current_symbol,
+  void CheckTransition(const State& current_state,
+                       const std::vector<Symbol>& current_symbols,
                        const State& next_state,
-                       const Symbol& next_symbol) const;
+                       const std::vector<Symbol>& next_symbols) const;
 
   std::unordered_set<State> states_;
   std::unordered_set<Symbol> alphabet_;
@@ -84,8 +95,8 @@ class Configuration {
   State initial_state_;
   Symbol blank_symbol_;
   std::unordered_set<State> accept_states_;
-  std::map<std::tuple<State, Symbol>,
-           std::tuple<State, Symbol, Tape::MoveDirection>>
+  std::size_t tapes_amount_;
+  std::map<Configuration::TransitionKey, Configuration::TransitionValue>
       transition_functions_;
 };
 

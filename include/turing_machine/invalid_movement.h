@@ -8,7 +8,7 @@ namespace cc {
 
 class InvalidMovement : public std::exception {
  public:
-  InvalidMovement(char movement);
+  explicit InvalidMovement(char movement);
   const char* what() const noexcept override;
 
  private:

@@ -8,7 +8,7 @@ namespace cc {
 
 class InvalidInputTape : public std::exception {
  public:
-  InvalidInputTape(const std::string& symbol);
+  explicit InvalidInputTape(const std::string& symbol);
   const char* what() const noexcept override;
 
  private:
